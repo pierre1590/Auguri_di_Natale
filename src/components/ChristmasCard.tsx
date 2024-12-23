@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "@fontsource/pacifico";
+import "../index.css";
 
 
 
@@ -120,6 +121,17 @@ const ChristmasCard: React.FC = () => {
     }
   };
 
+   // Varianti per Framer Motion per animare ogni carattere
+   const charVariants = {
+    hidden: { opacity: 0 },
+    visible: (i: number) => ({
+      opacity: 1,
+      transition: {
+        delay: i * 0.1, // Ritardo progressivo per ogni carattere
+      },
+    }),
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center"
@@ -165,12 +177,23 @@ const ChristmasCard: React.FC = () => {
             transition={{ duration: 0.5 }}
           >
             {/* Titolo con font Pacifico */}
-            <h2
+            <motion.h2
               className="text-2xl font-bold text-center text-red-500 mb-4"
               style={{ fontFamily: "Pacifico" }}
             >
-              {translations[locale].title}
-            </h2>
+              {[...translations[locale].title].map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={charVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {char}
+                </motion.span>
+              ))}
+             
+            </motion.h2>
 
             {/* Messaggio con font Pacifico */}
             <p
