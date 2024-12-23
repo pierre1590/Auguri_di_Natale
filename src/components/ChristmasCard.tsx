@@ -64,6 +64,25 @@ const ChristmasCard: React.FC = () => {
     }
   };
 
+
+   // Dizionario per il titolo della pagina
+ const titles = {
+  en: "🎄 Merry Christmas Wishes 🎄",
+  it: "🎄 Tanti auguri di Natale 🎄",
+  fr: "🎄 Joyeux Noël 🎄",
+};
+
+ // Imposta il titolo della pagina in base alla lingua del dispositivo
+ useEffect(() => {
+  const userLanguage = navigator.language.slice(0, 2); // Ottieni la lingua del dispositivo (es. "en", "it")
+  if (titles[userLanguage as keyof typeof titles]) {
+    setLocale(userLanguage); // Imposta la lingua
+  } else {
+    setLocale("en"); // Fallback a "en"
+  }
+  document.title = titles[userLanguage as keyof typeof titles] || titles["en"]; // Cambia il titolo dinamicamente
+}, []);
+
   // Funzione per generare il link personalizzato
   const generateShareLink = () => {
     const trimmedName = name.trim() || translations[locale].message; // Usa un messaggio predefinito se il nome è vuoto
