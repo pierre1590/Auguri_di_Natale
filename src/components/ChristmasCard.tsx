@@ -271,7 +271,7 @@ const ChristmasCard: React.FC = () => {
                 </div>
                 {copySuccess && (
                   <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-                    <p className="mt-2 text-green-500 font-bold text-lg "
+                    <p className="mt-2 text-red-500 font-bold text-lg "
                       style={{ fontFamily: "Pacifico" ,fontSize: "1.4rem"}}
                     >
                       {translations[locale].copySuccess}
