@@ -111,11 +111,11 @@ const ChristmasCard: React.FC = () => {
           setFinalName(decodedName); // Imposta il nome decodificato
         }
       } else {
-        setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un abbraccio caloroso di Natale"); // Fallback multilingua
+        setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un dolce abbraccio natalizio"); // Fallback multilingua
       }
     } catch (error) {
       console.error("Errore durante la lettura dell'URL:", error);
-      setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un abbraccio caloroso di Natale"); // Fallback multilingua in caso di errore
+      setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un dolce abbraccio natalizio"); // Fallback multilingua in caso di errore
     }
   }, [locale]);
 
