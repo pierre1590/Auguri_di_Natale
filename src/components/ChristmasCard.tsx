@@ -117,6 +117,15 @@ const ChristmasCard: React.FC = () => {
       console.error("Errore durante la lettura dell'URL:", error);
       setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un dolce abbraccio natalizio"); // Fallback multilingua in caso di errore
     }
+
+     // Rileva la lingua del dispositivo
+     const userLanguage = navigator.language.slice(0, 2); // Ottieni il codice della lingua (es. "en", "it")
+     if (translations[userLanguage]) {
+       setLocale(userLanguage); // Imposta la lingua se supportata
+     } else {
+       setLocale("en"); // Imposta inglese come fallback
+     }
+
   }, [locale]);
 
   // Funzione per copiare il link negli appunti
