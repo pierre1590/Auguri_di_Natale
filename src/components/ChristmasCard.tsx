@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "@fontsource/pacifico";
 import "../index.css";
+import { div } from "framer-motion/client";
 
 
 
@@ -26,7 +27,7 @@ const translations: Translations = {
     namePlaceholder: "Your name",
     generateLink: "Generate shareable link 🎁",
     copySuccess: "Link copied to clipboard!",
-    shareMessage: "Share this link:",
+    shareMessage: "Copy",
   },
   it: {
     clickToOpen: "Clicca qui per aprire",
@@ -35,7 +36,7 @@ const translations: Translations = {
     namePlaceholder: "Il tuo nome",
     generateLink: "Genera link di condivisione 🎁",
     copySuccess: "Link copiato negli appunti!",
-    shareMessage: "Condividi questo link:",
+    shareMessage: "Copia",
   },
   fr: {
     clickToOpen: "Cliquez ici pour ouvrir",
@@ -44,7 +45,7 @@ const translations: Translations = {
     namePlaceholder: "Votre nom",
     generateLink: "Générer un lien à partager 🎁",
     copySuccess: "Lien copié dans le presse-papiers!",
-    shareMessage: "Partagez ce lien:",
+    shareMessage: "Copie",
   },
 };
 
@@ -140,8 +141,12 @@ const ChristmasCard: React.FC = () => {
       }}
     >
       {/* Elemento audio */}
-      <audio ref={audioRef} src="/All_I_Want_For_Christmas_Is_You.mp3" loop /> {/* Musica di Natale */}
-
+      <audio
+        ref={audioRef}
+        src="/All_I_Want_For_Christmas_Is_You.mp3"
+        loop
+      />{" "}
+      {/* Musica di Natale */}
       <motion.div
         className="relative"
         initial={{ scale: 0.8, opacity: 0 }}
@@ -162,7 +167,7 @@ const ChristmasCard: React.FC = () => {
             {/* Testo sopra la busta */}
             <div className="absolute inset-0 flex items-center justify-center">
               <h2 className="text-white font-bold text-lg bg-black bg-opacity-75 px-4 py-2 rounded-lg">
-              📩 {translations[locale].clickToOpen}
+                📩 {translations[locale].clickToOpen}
               </h2>
             </div>
           </motion.div>
@@ -192,7 +197,6 @@ const ChristmasCard: React.FC = () => {
                   {char}
                 </motion.span>
               ))}
-             
             </motion.h2>
 
             {/* Messaggio con font Pacifico */}
@@ -229,30 +233,30 @@ const ChristmasCard: React.FC = () => {
             >
               {translations[locale].generateLink}
             </button>
-
             {shareLink && (
-              <div className="mt-4 text-sm text-center">
-                <p>{translations[locale].shareMessage}</p>
-                <div className="flex items-center justify-center space-x-2">
-                  <a
-                    href={shareLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline break-words"
+              <div className="mt-4">
+                <div className="flex items-center justify-between bg-gray-100 p-2 rounded-lg">
+                  {/* Link generato */}
+                  <p
+                    className="text-sm text-blue-500 truncate"
+                    title={shareLink}
                   >
                     {shareLink}
-                  </a>
+                  </p>
+                  {/* Pulsante per copiare il link */}
                   <button
                     onClick={copyToClipboard}
-                    className="px-2 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="ml-2 bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-700 transition"
                   >
-                    Copia
+                    {translations[locale].shareMessage}
                   </button>
                 </div>
                 {copySuccess && (
-                  <p className="mt-2 text-green-500 font-bold">
-                    {translations[locale].copySuccess}
-                  </p>
+                  <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                    <p className="mt-2 text-green-500 font-bold text-lg ">
+                      {translations[locale].copySuccess}
+                    </p>
+                  </div>
                 )}
               </div>
             )}
