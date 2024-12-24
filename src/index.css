@@ -2,17 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .blinking-cursor {
-    border-right: 2px solid red;
-    animation: blink 0.7s steps(2, start) infinite;
-  }
-  
-  @keyframes blink {
-    from {
-      border-color: transparent;
-    }
-    to {
-      border-color: red;
-    }
-  } */
-  

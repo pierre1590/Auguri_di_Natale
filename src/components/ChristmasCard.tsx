@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "@fontsource/pacifico";
-import "../index.css";
-import { div } from "framer-motion/client";
-
 
 
  // Dizionario delle traduzioni
