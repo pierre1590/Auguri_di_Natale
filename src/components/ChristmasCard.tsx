@@ -97,7 +97,7 @@ const ChristmasCard: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
     const urlName = params.get("name");
     if (urlName) {
-      setFinalName(urlName); // Imposta il nome fisso mostrato nel messaggio
+      setFinalName(decodeURIComponent(urlName)); // Imposta il nome fisso mostrato nel messaggio
     }
 
     // Rileva la lingua del dispositivo
