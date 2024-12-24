@@ -94,11 +94,23 @@ const ChristmasCard: React.FC = () => {
 
   // Recupera il nome dall'URL (solo all'inizio) e imposta la lingua
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const urlName = params.get("name");
-    if (urlName) {
-      setFinalName(decodeURIComponent(urlName)); // Imposta il nome fisso mostrato nel messaggio
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlName = params.get("name");
+  
+      if (urlName) {
+        // Decodifica e imposta il nome solo se è valido
+        const decodedName = decodeURIComponent(urlName).trim();
+        if (decodedName) {
+          setFinalName(decodedName); // Imposta il nome decodificato
+        }
+      }
+    } catch (error) {
+      console.error("Errore durante la lettura dell'URL:", error);
+      setFinalName("Amico/a"); // Imposta un nome di fallback in caso di errore
     }
+  }, []);
+  
 
     // Rileva la lingua del dispositivo
     const userLanguage = navigator.language.slice(0, 2); // Ottieni il codice della lingua (es. "en", "it")
