@@ -109,8 +109,6 @@ const ChristmasCard: React.FC = () => {
       console.error("Errore durante la lettura dell'URL:", error);
       setFinalName("Amico/a"); // Imposta un nome di fallback in caso di errore
     }
-  }, []);
-  
 
     // Rileva la lingua del dispositivo
     const userLanguage = navigator.language.slice(0, 2); // Ottieni il codice della lingua (es. "en", "it")
