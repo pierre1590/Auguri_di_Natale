@@ -232,19 +232,15 @@ const ChristmasCard: React.FC = () => {
 
             {/* Campo di input per il nome */}
             <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-bold text-gray-700 mb-2"
-              >
-                {translations[locale].namePlaceholder}
-              </label>
+             
               <input
                 id="name"
                 type="text"
                 placeholder={translations[locale].namePlaceholder}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full pl-5 pr-4 py-2 border border-green-500 rounded-lg bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 text-red-500 font-bold italic text-center placeholder-gray-400 transition"
+                style={{ fontFamily: "Pacifico", fontSize: "1.4rem" }}
               />
             </div>
 
