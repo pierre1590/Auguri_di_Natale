@@ -46,6 +46,12 @@ const translations: Translations = {
   },
 };
 
+const fallbackNames = {
+  en: "A sweet Christmas hug",
+  it: "Un dolce abbraccio natalizio",
+  fr: "Un doux câlin de Noël",
+}
+
 const ChristmasCard: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState(""); // Nome digitato nel campo input
@@ -104,20 +110,14 @@ const ChristmasCard: React.FC = () => {
         if (decodedName) {
           setFinalName(decodedName); // Imposta il nome decodificato
         }
+      } else {
+        setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un abbraccio caloroso di Natale"); // Fallback multilingua
       }
     } catch (error) {
       console.error("Errore durante la lettura dell'URL:", error);
-      setFinalName("Amico/a"); // Imposta un nome di fallback in caso di errore
+      setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un abbraccio caloroso di Natale"); // Fallback multilingua in caso di errore
     }
-
-    // Rileva la lingua del dispositivo
-    const userLanguage = navigator.language.slice(0, 2); // Ottieni il codice della lingua (es. "en", "it")
-    if (translations[userLanguage]) {
-      setLocale(userLanguage); // Imposta la lingua se supportata
-    } else {
-      setLocale("en"); // Imposta inglese come fallback
-    }
-  }, []);
+  }, [locale]);
 
   // Funzione per copiare il link negli appunti
   const copyToClipboard = () => {
