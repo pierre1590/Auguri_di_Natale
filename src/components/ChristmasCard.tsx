@@ -13,6 +13,7 @@ type Translations = {
     generateLink: string;
     copySuccess: string;
     shareMessage: string;
+    noNameMessage: string;
   };
 };
 
@@ -25,6 +26,7 @@ const translations: Translations = {
     generateLink: "Generate shareable link 🎁",
     copySuccess: "Link copied to clipboard!",
     shareMessage: "Copy",
+    noNameMessage: "A sweet Christmas hug",
   },
   it: {
     clickToOpen: "Clicca qui per aprire",
@@ -34,6 +36,7 @@ const translations: Translations = {
     generateLink: "Genera link di condivisione 🎁",
     copySuccess: "Link copiato negli appunti!",
     shareMessage: "Copia",
+    noNameMessage: "Un dolce abbraccio natalizio",
   },
   fr: {
     clickToOpen: "Cliquez ici pour ouvrir",
@@ -43,14 +46,11 @@ const translations: Translations = {
     generateLink: "Générer un lien à partager 🎁",
     copySuccess: "Lien copié dans le presse-papiers!",
     shareMessage: "Copie",
+    noNameMessage: "Un doux câlin de Noël",
   },
 };
 
-const fallbackNames = {
-  en: "A sweet Christmas hug",
-  it: "Un dolce abbraccio natalizio",
-  fr: "Un doux câlin de Noël",
-}
+
 
 const ChristmasCard: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -90,12 +90,10 @@ const ChristmasCard: React.FC = () => {
 
   // Funzione per generare il link personalizzato
   const generateShareLink = () => {
-    const trimmedName = name.trim() || translations[locale].message; // Usa un messaggio predefinito se il nome è vuoto
-    const link = `${window.location.origin}?name=${encodeURIComponent(
-      trimmedName
-    )}`;
+    const trimmedName = name.trim() || translations[locale].noNameMessage; // Usa noNameMessage se il nome è vuoto
+    const link = `${window.location.origin}?name=${encodeURIComponent(trimmedName)}`;
     setShareLink(link);
-    setCopySuccess(false); // Resetta il messaggio di copia avvenuta
+    setCopySuccess(false); // Resetta il messaggio di copia
   };
 
   // Recupera il nome dall'URL (solo all'inizio) e imposta la lingua
@@ -105,17 +103,16 @@ const ChristmasCard: React.FC = () => {
       const urlName = params.get("name");
   
       if (urlName) {
-        // Decodifica e imposta il nome solo se è valido
+        // Decodifica il parametro 'name' e usa il valore, altrimenti fallback
         const decodedName = decodeURIComponent(urlName).trim();
-        if (decodedName) {
-          setFinalName(decodedName); // Imposta il nome decodificato
-        }
+        setFinalName(decodedName || translations[locale].noNameMessage);
       } else {
-        setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un dolce abbraccio natalizio"); // Fallback multilingua
+        // Se il parametro 'name' non è presente, usa il fallback
+        setFinalName(translations[locale].noNameMessage);
       }
     } catch (error) {
       console.error("Errore durante la lettura dell'URL:", error);
-      setFinalName(fallbackNames[locale as keyof typeof fallbackNames] || "Un dolce abbraccio natalizio"); // Fallback multilingua in caso di errore
+      setFinalName(translations[locale].noNameMessage);
     }
 
      // Rileva la lingua del dispositivo
@@ -192,7 +189,7 @@ const ChristmasCard: React.FC = () => {
         {/* Lettera aperta */}
         {isOpen && (
           <motion.div
-            className="w-80 h-auto bg-white rounded-lg shadow-lg p-6 border-4 border-red-500"
+            className="w-80 h-auto bg-yellow-100 rounded-lg shadow-lg p-6 border-4 border-red-500"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -220,8 +217,17 @@ const ChristmasCard: React.FC = () => {
               className="text-center text-gray-700 mb-6"
               style={{ fontFamily: "Pacifico" }}
             >
-              {translations[locale].message}{" "}
-              <span className="font-bold text-green-600">{finalName}</span>
+              {finalName.trim() &&
+              finalName !== translations[locale].noNameMessage ? (
+                <>
+                  {translations[locale].message}{" "}
+                  <span className="font-bold text-green-600">{finalName}</span>
+                </>
+              ) : (
+                <span className="text-green-700 font-bold">
+                ✨ {translations[locale].noNameMessage} ✨
+              </span>
+              )}
             </p>
 
             {/* Campo di input per il nome */}
